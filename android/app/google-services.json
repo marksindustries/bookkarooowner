@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "208883840983",
+    "project_id": "bookkaroo-747a6",
+    "storage_bucket": "bookkaroo-747a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208883840983:android:cc4796ad01dad92b273d92",
+        "android_client_info": {
+          "package_name": "com.bookkaroo.in.bookkaroo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "208883840983-qhnubm21jlff5fhopdtk06o825t326t1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bookkaroo.in.bookkaroo",
+            "certificate_hash": "665ae9604dd0660d2a684e5cb53bb5f00be59310"
+          }
+        },
+        {
+          "client_id": "208883840983-uacsr4ou49kl4ve12tu3m2v92ijr3bpt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtOxi9puYntUTRen1Zf4TR9sl8OzjmGlM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "208883840983-uacsr4ou49kl4ve12tu3m2v92ijr3bpt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "208883840983-60ujq7411seri7mgvop91thcrue4e0mh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bookkaroowner"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208883840983:android:99fcd00933a70459273d92",
+        "android_client_info": {
+          "package_name": "com.example.bookkarooowner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "208883840983-uacsr4ou49kl4ve12tu3m2v92ijr3bpt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtOxi9puYntUTRen1Zf4TR9sl8OzjmGlM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "208883840983-uacsr4ou49kl4ve12tu3m2v92ijr3bpt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "208883840983-60ujq7411seri7mgvop91thcrue4e0mh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bookkaroowner"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
