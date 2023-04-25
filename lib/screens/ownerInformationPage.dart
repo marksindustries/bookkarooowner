@@ -1,47 +1,60 @@
+import 'dart:io';
+
 import 'package:bookkarooowner/screens/homeScreen/homeScreen.dart';
 import 'package:bookkarooowner/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
 class OwnerInformationPage extends StatefulWidget {
-  late String mobileNumber;
-
-  OwnerInformationPage({required this.mobileNumber});
-
   @override
   State<OwnerInformationPage> createState() => _OwnerInformationPageState();
 }
 
 class _OwnerInformationPageState extends State<OwnerInformationPage> {
+  late bool isOpen = true;
   TextEditingController nameController = TextEditingController();
-
-  TextEditingController emailIdController = TextEditingController();
-
+  TextEditingController phoneNumberController = TextEditingController();
   TextEditingController cityController = TextEditingController();
-
   TextEditingController stateController = TextEditingController();
+  TextEditingController shopNameController = TextEditingController();
+  TextEditingController shopAddressController = TextEditingController();
+  File? shopImage;
 
-  void saveNewCustomer() async {
-    int contactNumber = int.parse(widget.mobileNumber);
+  void saveNewOwner() async {
+
+    var newContactNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
     String name = nameController.text.toLowerCase().trim();
-    String emailId = emailIdController.text.toLowerCase().trim();
+    int contactNumber = int.parse(newContactNumber.toString());
     String city = cityController.text.toLowerCase().trim();
     String state = stateController.text.toLowerCase().trim();
+    String shopName = shopNameController.text.toLowerCase().trim();
+    String shopAddress = shopAddressController.text.toLowerCase().trim();
+
+    UploadTask uploadTask =  FirebaseStorage.instance.ref().child("shopImages").child(name).putFile(shopImage!);
+    TaskSnapshot taskSnapshot = await uploadTask;
+    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+
 
     Map<String, dynamic> newUser = {
       "name": name,
       "contactNumber": contactNumber,
-      "emailId": emailId,
-      "city": city,
-      "state": state,
+      "shopCity": city,
+      "shopState": state,
+      "shopName":shopName,
+      "shopAddress": shopAddress,
+      "isOpen":isOpen,
+      "shopImage":downloadUrl
     };
 
     try {
       await FirebaseFirestore.instance
-          .collection("customers")
-          .doc("${contactNumber}")
+          .collection("owners")
+          .doc("${shopName}")
           .set(newUser);
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => HomeScreen()));
@@ -49,6 +62,7 @@ class _OwnerInformationPageState extends State<OwnerInformationPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Welcome !")),
       );
+      debugPrint("user created");
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.message!)),
@@ -74,7 +88,7 @@ class _OwnerInformationPageState extends State<OwnerInformationPage> {
                 'Tell Us About Yourself',
                 style: GoogleFonts.lato(
                     fontSize: 28,
-                    color: const Color(0xff1F319D),
+                    color: Colors.black,
                     fontWeight: FontWeight.bold),
               ),
             ),
@@ -89,8 +103,12 @@ class _OwnerInformationPageState extends State<OwnerInformationPage> {
                         controllerName: nameController,
                       ),
                       TextFieldBookKaroo(
-                        text: 'Email Id',
-                        controllerName: emailIdController,
+                        text: 'Shop Name',
+                        controllerName: shopNameController,
+                      ),
+                      TextFieldBookKaroo(
+                        text: 'Shop Address',
+                        controllerName: shopAddressController,
                       ),
                       TextFieldBookKaroo(
                         text: 'City',
@@ -100,21 +118,42 @@ class _OwnerInformationPageState extends State<OwnerInformationPage> {
                         text: 'State',
                         controllerName: stateController,
                       ),
+                     Container(
+                       child: GestureDetector(
+                         onTap: () async {
+                           XFile? selectedImage = await ImagePicker().pickImage(source: ImageSource.camera);
+                           if(selectedImage!= null){
+                             File convertedFile = File(selectedImage.path);
+                             setState(() {
+                               shopImage = convertedFile;
+                             });
+                           }
+
+                         },
+                         child: CircleAvatar(
+                           radius: 60,
+                           child: Icon(Icons.upload),
+                           backgroundImage: (shopImage != null) ? FileImage(shopImage!) : null,
+                         ),
+                       ),
+                     )
                     ],
                   ),
                 ),
               ),
             ),
+            SizedBox(height: 60,),
+
             Container(
               width: 100,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: const Color(0xff1F319D),
+                color: Colors.black,
               ),
               child: TextButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
-                    saveNewCustomer();
+                    saveNewOwner();
                   }
                 },
                 child: const Text(

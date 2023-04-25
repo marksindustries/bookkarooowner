@@ -25,11 +25,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        selectedLabelStyle: TextStyle(
-          color: Colors.black,
-          // fontSize: ,
-        ),
-        selectedIconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: Colors.black,
+        unselectedItemColor: Colors.grey,
+        unselectedIconTheme: const IconThemeData(color: Colors.grey),
+        selectedItemColor: Colors.white,
+        selectedIconTheme: const IconThemeData(color: Colors.white),
         currentIndex: _currentIndex,
         onTap: (int index) {
           setState(() {
@@ -37,12 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
         items: const [
-          // BottomNavigationBarItem(
-          //   icon: Icon(
-          //     Icons.home,
-          //   ),
-          //   label: 'Home',
-          // ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.bookmark_added_sharp,

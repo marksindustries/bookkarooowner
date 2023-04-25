@@ -32,17 +32,16 @@ class _SendOTPPageState extends State<SendOTPPage> {
 
       if (userCredential.user != null) {
         QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-            .collection("customers")
-            .where("contactNumber", isEqualTo: int.parse(widget.mobileNumber))
+            .collection("owners")
+            .where("contactNumber", isEqualTo: int.parse(FirebaseAuth.instance.currentUser!.phoneNumber.toString()))
             .get();
-        print(querySnapshot.docs.toString());
 
         if (querySnapshot.size == 0) {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) =>
-                  OwnerInformationPage(mobileNumber: widget.mobileNumber),
+                  OwnerInformationPage(),
             ),
           );
         } else {

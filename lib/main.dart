@@ -1,6 +1,7 @@
 import 'package:bookkarooowner/firebase_options.dart';
 import 'package:bookkarooowner/screens/gettingStartedPage.dart';
 import 'package:bookkarooowner/screens/homeScreen/homeScreen.dart';
+import 'package:bookkarooowner/screens/ownerInformationPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +19,13 @@ class BookKarooOwner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-     home: (FirebaseAuth.instance.currentUser != null)
-        ? HomeScreen()
-        : GettingStarted(),
+     home:(FirebaseAuth.instance.currentUser != null)
+         ? HomeScreen()
+         : GettingStarted(),
+
     );
   }
 }
+
+
+
