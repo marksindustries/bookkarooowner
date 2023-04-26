@@ -121,7 +121,9 @@ class _OwnerInformationPageState extends State<OwnerInformationPage> {
                      Container(
                        child: GestureDetector(
                          onTap: () async {
-                           XFile? selectedImage = await ImagePicker().pickImage(source: ImageSource.camera);
+                           XFile? selectedImage = await ImagePicker().pickImage(
+                             imageQuality: 25,
+                               source: ImageSource.camera);
                            if(selectedImage!= null){
                              File convertedFile = File(selectedImage.path);
                              setState(() {
