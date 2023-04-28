@@ -10,7 +10,11 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin<HomePage> {
+  @override
+  bool get wantKeepAlive => true;
+
   var contactNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
 
   void confirmBooking(
@@ -44,119 +48,130 @@ class _HomePageState extends State<HomePage> {
         builder: (context, snapShot) {
           if (snapShot.connectionState == ConnectionState.active) {
             if (snapShot.hasData && snapShot.data != null) {
-              return ListView.builder(
-                itemCount: snapShot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  Map<String, dynamic> userMap =
-                      snapShot.data!.docs[index].data();
+              if (snapShot.data!.docs.length == 0) {
+                return Center(
+                    child: Text(
+                  "No Bookings ",
+                  style: TextStyle(fontSize: 18),
+                ));
+              } else {
+                return ListView.builder(
+                  itemCount: snapShot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    Map<String, dynamic> userMap =
+                        snapShot.data!.docs[index].data();
 
-                  return Dismissible(
-                    key: Key(snapShot.data!.docs[index].id),
-                    direction: DismissDirection.endToStart,
-                    background: Container(
-                      alignment: Alignment.centerRight,
-                      color: Colors.red,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Icon(
-                          Icons.delete,
-                          color: Colors.white,
+                    return Dismissible(
+                      key: Key(snapShot.data!.docs[index].id),
+                      direction: DismissDirection.endToStart,
+                      background: Container(
+                        alignment: Alignment.centerRight,
+                        color: Colors.red,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                    onDismissed: (direction) {
-                      // Delete the document from Firestore when swiped left
-                      snapShot.data!.docs[index].reference.delete();
-                    },
-                    child: Card(
-                      margin: const EdgeInsets.all(12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      elevation: 5,
-                      child: Container(
-                        height: 200,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(
-                              userMap["customerName"].toString().toUpperCase(),
-                              style: const TextStyle(fontSize: 28),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  userMap['bookingTime'] != null
-                                      ? userMap['bookingTime']
-                                      : '',
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  userMap['bookingDate'] != null
-                                      ? DateFormat('d MMM').format(
-                                          userMap['bookingDate'].toDate())
-                                      : '',
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            userMap['bookingUpdated'] == false
-                                ? Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          confirmBooking(
-                                              true, index, snapShot.data!);
-                                        },
-                                        style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                                  Colors.green),
+                      onDismissed: (direction) {
+                        // Delete the document from Firestore when swiped left
+                        snapShot.data!.docs[index].reference.delete();
+                      },
+                      child: Card(
+                        margin: const EdgeInsets.all(12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        elevation: 5,
+                        child: Container(
+                          height: 200,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                userMap["customerName"]
+                                    .toString()
+                                    .toUpperCase(),
+                                style: const TextStyle(fontSize: 28),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    userMap['bookingTime'] != null
+                                        ? userMap['bookingTime']
+                                        : '',
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    userMap['bookingDate'] != null
+                                        ? DateFormat('d MMM').format(
+                                            userMap['bookingDate'].toDate())
+                                        : '',
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              userMap['bookingUpdated'] == false
+                                  ? Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            confirmBooking(
+                                                true, index, snapShot.data!);
+                                          },
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                    Color>(Colors.green),
+                                          ),
+                                          child: const Text('Accept'),
                                         ),
-                                        child: const Text('Accept'),
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          confirmBooking(
-                                              false, index, snapShot.data!);
-                                        },
-                                        style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                                  Colors.red),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            confirmBooking(
+                                                false, index, snapShot.data!);
+                                          },
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                    Color>(Colors.red),
+                                          ),
+                                          child: const Text('Decline'),
                                         ),
-                                        child: const Text('Decline'),
-                                      ),
-                                    ],
-                                  )
-                                : userMap['isConfirm'] == true
-                                    ? const Text(
-                                        "Booking Accepted",
-                                        style: TextStyle(
-                                            color: Colors.green, fontSize: 22),
-                                      )
-                                    : const Text(
-                                        "Booking Declined",
-                                        style: TextStyle(
-                                            color: Colors.red, fontSize: 22),
-                                      )
-                          ],
+                                      ],
+                                    )
+                                  : userMap['isConfirm'] == true
+                                      ? const Text(
+                                          "Booking Accepted",
+                                          style: TextStyle(
+                                              color: Colors.green,
+                                              fontSize: 22),
+                                        )
+                                      : const Text(
+                                          "Booking Declined",
+                                          style: TextStyle(
+                                              color: Colors.red, fontSize: 22),
+                                        )
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
-              );
+                    );
+                  },
+                );
+              }
             } else {
               return const Center(
                 child: CircularProgressIndicator(),

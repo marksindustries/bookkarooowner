@@ -12,7 +12,9 @@ class SettingsPage extends StatefulWidget {
   State<SettingsPage> createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _SettingsPageState extends State<SettingsPage> with AutomaticKeepAliveClientMixin<SettingsPage> {
+  @override
+  bool get wantKeepAlive => true;
   Future<void> updateOpenorClose(bool update) async {
     await FirebaseFirestore.instance
         .collection("owners")

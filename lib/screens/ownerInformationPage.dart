@@ -9,6 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:multiselect/multiselect.dart';
 
 class OwnerInformationPage extends StatefulWidget {
   @override
@@ -17,9 +18,12 @@ class OwnerInformationPage extends StatefulWidget {
 
 class _OwnerInformationPageState extends State<OwnerInformationPage> {
 
+  List<String> cities = ['Chatrapati Sambhajinagar','Pune','Nagpur','Nashik','Jalna','Beed','Solapur','Kolhapur'];
+  List<String> selectedCity = [];
+
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController cityController = TextEditingController();
+  // TextEditingController cityController = TextEditingController();
   TextEditingController stateController = TextEditingController();
   TextEditingController shopNameController = TextEditingController();
   TextEditingController shopAddressController = TextEditingController();
@@ -29,7 +33,7 @@ class _OwnerInformationPageState extends State<OwnerInformationPage> {
     var newContactNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
     String name = nameController.text.toLowerCase().trim();
     int contactNumber = int.parse(newContactNumber.toString());
-    String city = cityController.text.toLowerCase().trim();
+    String city = selectedCity[0];
     String state = stateController.text.toLowerCase().trim();
     String shopName = shopNameController.text.toLowerCase().trim();
     String shopAddress = shopAddressController.text.toLowerCase().trim();
@@ -112,9 +116,17 @@ class _OwnerInformationPageState extends State<OwnerInformationPage> {
                         text: 'Shop Address',
                         controllerName: shopAddressController,
                       ),
-                      TextFieldBookKaroo(
-                        text: 'City',
-                        controllerName: cityController,
+                      Padding(
+                        padding: EdgeInsets.all(9),
+                        child: DropDownMultiSelect(
+                          options: cities,
+                          selectedValues: selectedCity,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedCity = value;
+                            });
+                          },
+                        ),
                       ),
                       TextFieldBookKaroo(
                         text: 'State',

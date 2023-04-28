@@ -2,8 +2,6 @@ import 'package:bookkarooowner/screens/homeScreen/SettingsPage.dart';
 import 'package:bookkarooowner/screens/homeScreen/homePage.dart';
 import 'package:flutter/material.dart';
 
-
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -14,26 +12,41 @@ class HomeScreen extends StatefulWidget {
 TextEditingController searchController = TextEditingController();
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Widget> Screens = [
-    const HomePage(),
-    const SettingsPage(),
-  ];
-  int _currentIndex = 0;
-  String? searchValue;
+  var _selectedPageIndex;
+  late List<Widget> _pages;
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _selectedPageIndex = 0;
+    _pages = [
+      const HomePage(),
+      const SettingsPage(),
+    ];
+
+    _pageController = PageController(initialPage: _selectedPageIndex);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: PageView(
+        controller: _pageController,
+        physics: NeverScrollableScrollPhysics(),
+        children: _pages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
         unselectedItemColor: Colors.grey,
         unselectedIconTheme: const IconThemeData(color: Colors.grey),
-        selectedItemColor: Colors.white,
-        selectedIconTheme: const IconThemeData(color: Colors.white),
-        currentIndex: _currentIndex,
-        onTap: (int index) {
+        selectedItemColor: Colors.black,
+        selectedIconTheme: const IconThemeData(color: Colors.black),
+        currentIndex: _selectedPageIndex,
+        onTap: (selectedPageIndex) {
           setState(() {
-            _currentIndex = index;
+            _selectedPageIndex = selectedPageIndex;
+            _pageController.jumpToPage(selectedPageIndex);
           });
         },
         items: const [
@@ -51,8 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-
-      body: Screens[_currentIndex],
     );
   }
 }
