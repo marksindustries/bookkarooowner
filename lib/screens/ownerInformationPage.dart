@@ -16,7 +16,7 @@ class OwnerInformationPage extends StatefulWidget {
 }
 
 class _OwnerInformationPageState extends State<OwnerInformationPage> {
-  late bool isOpen = true;
+
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController cityController = TextEditingController();
@@ -26,7 +26,6 @@ class _OwnerInformationPageState extends State<OwnerInformationPage> {
   File? shopImage;
 
   void saveNewOwner() async {
-
     var newContactNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
     String name = nameController.text.toLowerCase().trim();
     int contactNumber = int.parse(newContactNumber.toString());
@@ -35,34 +34,37 @@ class _OwnerInformationPageState extends State<OwnerInformationPage> {
     String shopName = shopNameController.text.toLowerCase().trim();
     String shopAddress = shopAddressController.text.toLowerCase().trim();
 
-    UploadTask uploadTask =  FirebaseStorage.instance.ref().child("shopImages").child(name).putFile(shopImage!);
+    UploadTask uploadTask = FirebaseStorage.instance
+        .ref()
+        .child("shopImages")
+        .child(name)
+        .putFile(shopImage!);
     TaskSnapshot taskSnapshot = await uploadTask;
     String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-
 
     Map<String, dynamic> newUser = {
       "name": name,
       "contactNumber": contactNumber,
       "shopCity": city,
       "shopState": state,
-      "shopName":shopName,
+      "shopName": shopName,
       "shopAddress": shopAddress,
-      "isOpen":isOpen,
-      "shopImage":downloadUrl
+      "isOpen": false,
+      "shopImage": downloadUrl
     };
 
     try {
       await FirebaseFirestore.instance
           .collection("owners")
-          .doc("${shopName}")
+          .doc("$shopName")
           .set(newUser);
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Welcome !")),
       );
-      debugPrint("user created");
+
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.message!)),
@@ -118,34 +120,35 @@ class _OwnerInformationPageState extends State<OwnerInformationPage> {
                         text: 'State',
                         controllerName: stateController,
                       ),
-                     Container(
-                       child: GestureDetector(
-                         onTap: () async {
-                           XFile? selectedImage = await ImagePicker().pickImage(
-                             imageQuality: 25,
-                               source: ImageSource.camera);
-                           if(selectedImage!= null){
-                             File convertedFile = File(selectedImage.path);
-                             setState(() {
-                               shopImage = convertedFile;
-                             });
-                           }
-
-                         },
-                         child: CircleAvatar(
-                           radius: 60,
-                           child: Icon(Icons.upload),
-                           backgroundImage: (shopImage != null) ? FileImage(shopImage!) : null,
-                         ),
-                       ),
-                     )
+                      GestureDetector(
+                        onTap: () async {
+                          XFile? selectedImage = await ImagePicker()
+                              .pickImage(
+                                  imageQuality: 25,
+                                  source: ImageSource.camera);
+                          if (selectedImage != null) {
+                            File convertedFile = File(selectedImage.path);
+                            setState(() {
+                              shopImage = convertedFile;
+                            });
+                          }
+                        },
+                        child: CircleAvatar(
+                          radius: 60,
+                          child: const Icon(Icons.upload),
+                          backgroundImage: (shopImage != null)
+                              ? FileImage(shopImage!)
+                              : null,
+                        ),
+                      )
                     ],
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 60,),
-
+            const SizedBox(
+              height: 60,
+            ),
             Container(
               width: 100,
               decoration: BoxDecoration(

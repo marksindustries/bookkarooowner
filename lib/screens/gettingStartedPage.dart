@@ -14,9 +14,10 @@ class GettingStarted extends StatefulWidget {
 class _GettingStartedState extends State<GettingStarted> {
   late FocusNode _focusNode;
   TextEditingController mobileNumberController = TextEditingController();
+  String code = "+91";
 
   void sendOTP() async {
-    String phone = "+91" + mobileNumberController.text.trim();
+    String phone = code + mobileNumberController.text.trim();
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phone,
       codeSent: (verificationId, resendToken) {
@@ -39,7 +40,7 @@ class _GettingStartedState extends State<GettingStarted> {
         );
       },
       codeAutoRetrievalTimeout: (verificationId) {},
-      timeout: const Duration(seconds: 30),
+      timeout: const Duration(seconds: 60),
     );
   }
 

@@ -20,34 +20,32 @@ class TextFieldBookKaroo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        child: TextFormField(
-          maxLength: maxLength,
-          keyboardType: type,
-          onChanged: onChanged,
-          focusNode: focusNode,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-          controller: controllerName,
-          style: const TextStyle(color: Colors.black),
-          decoration: InputDecoration(
-            counterText: "",
-            label: Text(
-              text,
-            ),
-            labelStyle: const TextStyle(color: Colors.black),
-            enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(width: 2, color: Colors.grey),
-            ),
-            focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(
-                width: 3,
-                color: Colors.black,
-              ),
+      child: TextFormField(
+        maxLength: maxLength,
+        keyboardType: type,
+        onChanged: onChanged,
+        focusNode: focusNode,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter some text';
+          }
+          return null;
+        },
+        controller: controllerName,
+        style: const TextStyle(color: Colors.black),
+        decoration: InputDecoration(
+          counterText: "",
+          label: Text(
+            text,
+          ),
+          labelStyle: const TextStyle(color: Colors.black),
+          enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(width: 2, color: Colors.grey),
+          ),
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(
+              width: 3,
+              color: Colors.black,
             ),
           ),
         ),

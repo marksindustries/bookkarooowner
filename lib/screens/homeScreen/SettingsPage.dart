@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -14,11 +13,13 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-
   Future<void> updateOpenorClose(bool update) async {
     await FirebaseFirestore.instance
         .collection("owners")
-        .where('contactNumber', isEqualTo: int.parse(FirebaseAuth.instance.currentUser!.phoneNumber.toString().substring(1)))
+        .where('contactNumber',
+            isEqualTo: int.parse(FirebaseAuth.instance.currentUser!.phoneNumber
+                .toString()
+                .substring(1)))
         .get()
         .then((querySnapshot) {
       querySnapshot.docs.forEach((doc) {
@@ -26,8 +27,6 @@ class _SettingsPageState extends State<SettingsPage> {
       });
     });
   }
-
-
 
   Future<Map<String, dynamic>> getData() async {
     User? user = FirebaseAuth.instance.currentUser;
@@ -75,7 +74,7 @@ class _SettingsPageState extends State<SettingsPage> {
         builder: (BuildContext context,
             AsyncSnapshot<Map<String, dynamic>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
@@ -86,25 +85,24 @@ class _SettingsPageState extends State<SettingsPage> {
                   child: Column(
                     children: [
                       Container(
-                        margin: EdgeInsets.all(9),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1
-                          )
-                        ),
+                        margin: const EdgeInsets.all(9),
+                        decoration: BoxDecoration(border: Border.all(width: 1)),
                         child: ListTile(
-                          title: Text("Name : " + snapshot.data!['name'].toString(),style: TextStyle(fontSize: 18),),
+                          title: Text(
+                            "Name : " +
+                                snapshot.data!['name'].toString().toUpperCase(),
+                            style: const TextStyle(fontSize: 18),
+                          ),
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.all(9),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1
-                          )
-                        ),
+                        margin: const EdgeInsets.all(9),
+                        decoration: BoxDecoration(border: Border.all(width: 1)),
                         child: ListTile(
-                          leading: Text("Shop Status",style: TextStyle(fontSize: 18),),
+                          leading: const Text(
+                            "Shop Status",
+                            style: TextStyle(fontSize: 18),
+                          ),
                           trailing: CupertinoSwitch(
                             // This bool value toggles the switch.
                             value: switchValue,
@@ -112,13 +110,15 @@ class _SettingsPageState extends State<SettingsPage> {
                             onChanged: (bool? value) {
                               setState(() {
                                 switchValue = value ?? false;
-                                switchValue? updateOpenorClose(true): updateOpenorClose(false);
+                                switchValue
+                                    ? updateOpenorClose(true)
+                                    : updateOpenorClose(false);
                               });
                             },
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 100,
                       ),
                       TextButton(
@@ -165,7 +165,7 @@ class ContainerInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              " ${text} :  ",
+              " $text :  ",
               style: GoogleFonts.lato(fontSize: 16),
             ),
             Text(

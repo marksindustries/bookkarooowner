@@ -169,30 +169,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
-  firebase_messaging:
+  firebase_database:
     dependency: "direct main"
     description:
-      name: firebase_messaging
-      sha256: b300f728021b52018e4fc5aed326e71f876ef58219d7f10754370f424a338929
+      name: firebase_database
+      sha256: "39e4fe701ffc9e6d963018348c4bfcf989671c1eb9f29c04663a4e7130c2107c"
       url: "https://pub.dev"
     source: hosted
-    version: "14.4.1"
-  firebase_messaging_platform_interface:
+    version: "10.1.1"
+  firebase_database_platform_interface:
     dependency: transitive
     description:
-      name: firebase_messaging_platform_interface
-      sha256: "3585b447d9a8c8a22ab6c14ffe57c64c0fcd9656e437e3dd226ef88a5f334b84"
+      name: firebase_database_platform_interface
+      sha256: "0490b234c72e84cc8b35991a7c02956e58f9fb52fd1705a5fb80d2b434d60078"
       url: "https://pub.dev"
     source: hosted
-    version: "4.3.1"
-  firebase_messaging_web:
+    version: "0.2.3+1"
+  firebase_database_web:
     dependency: transitive
     description:
-      name: firebase_messaging_web
-      sha256: "9e95a7694a1a24a8cdb047351c5a75583c84767d82ce74c52647ee9f81b425ae"
+      name: firebase_database_web
+      sha256: c3ab578fd2bf0fe6d4af61554e325b1f629c769cb61d509162f2d5942fa2c983
       url: "https://pub.dev"
     source: hosted
-    version: "3.3.1"
+    version: "0.2.2+1"
   firebase_storage:
     dependency: "direct main"
     description:
@@ -529,10 +529,10 @@ packages:
     dependency: transitive
     description:
       name: xdg_directories
-      sha256: ee1505df1426458f7f60aac270645098d318a8b4766d85fde75f76f2e21807d1
+      sha256: bd512f03919aac5f1313eb8249f223bacf4927031bf60b02601f81f687689e86
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "0.2.0+3"
 sdks:
   dart: ">=2.19.6 <3.0.0"
   flutter: ">=3.3.0"

@@ -115,8 +115,7 @@ class _SendOTPPageState extends State<SendOTPPage> {
           Container(
             padding: const EdgeInsets.only(left: 12),
             alignment: Alignment.centerLeft,
-            child: Text(
-              "${widget.mobileNumber}",
+            child: Text(widget.mobileNumber,
               style:
               GoogleFonts.lato(fontSize: 24, fontWeight: FontWeight.bold),
             ),
