@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -31,10 +34,20 @@ class _HomePageState extends State<HomePage>
     await bookingCollection.doc(documentID).update({'bookingUpdated': true});
   }
 
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
+        flexibleSpace: ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10,sigmaY: 50),
+            child: Container(color:Colors.transparent),
+          ),
+        ),
         automaticallyImplyLeading: false,
         title: const Text("Bookings"),
         backgroundColor: Colors.black,
@@ -49,7 +62,7 @@ class _HomePageState extends State<HomePage>
           if (snapShot.connectionState == ConnectionState.active) {
             if (snapShot.hasData && snapShot.data != null) {
               if (snapShot.data!.docs.length == 0) {
-                return Center(
+                return const Center(
                     child: Text(
                   "No Bookings ",
                   style: TextStyle(fontSize: 18),
@@ -67,8 +80,8 @@ class _HomePageState extends State<HomePage>
                       background: Container(
                         alignment: Alignment.centerRight,
                         color: Colors.red,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
+                        child: const Padding(
+                          padding: EdgeInsets.all(16.0),
                           child: Icon(
                             Icons.delete,
                             color: Colors.white,

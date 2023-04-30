@@ -1,9 +1,11 @@
+import 'dart:ui';
+
 import 'package:bookkarooowner/screens/gettingStartedPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -61,7 +63,14 @@ class _SettingsPageState extends State<SettingsPage> with AutomaticKeepAliveClie
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: false,
       appBar: AppBar(
+        flexibleSpace: ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10,sigmaY: 50),
+            child: Container(color:Colors.transparent),
+          ),
+        ),
         elevation: 10,
         automaticallyImplyLeading: false,
         centerTitle: false,
@@ -168,11 +177,11 @@ class ContainerInfo extends StatelessWidget {
           children: [
             Text(
               " $text :  ",
-              style: GoogleFonts.lato(fontSize: 16),
+              style: TextStyle(fontSize: 16),
             ),
             Text(
               value,
-              style: GoogleFonts.lato(fontSize: 18),
+              style:TextStyle(fontSize: 18),
             ),
           ],
         ),

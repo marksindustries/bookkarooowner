@@ -4,7 +4,7 @@ import 'package:bookkarooowner/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class SendOTPPage extends StatefulWidget {
   late String mobileNumber;
@@ -109,7 +109,7 @@ class _SendOTPPageState extends State<SendOTPPage> {
             child: Text(
               "Enter the 6-digit OTP sent to",
               style:
-              GoogleFonts.lato(fontSize: 24, fontWeight: FontWeight.normal),
+              TextStyle(fontSize: 24, fontWeight: FontWeight.normal),
             ),
           ),
           Container(
@@ -117,7 +117,7 @@ class _SendOTPPageState extends State<SendOTPPage> {
             alignment: Alignment.centerLeft,
             child: Text(widget.mobileNumber,
               style:
-              GoogleFonts.lato(fontSize: 24, fontWeight: FontWeight.bold),
+              TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
           ),
           const SizedBox(

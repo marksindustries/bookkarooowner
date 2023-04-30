@@ -5,9 +5,9 @@ import 'package:bookkarooowner/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multiselect/multiselect.dart';
 
@@ -17,12 +17,43 @@ class OwnerInformationPage extends StatefulWidget {
 }
 
 class _OwnerInformationPageState extends State<OwnerInformationPage> {
+  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
-  List<String> cities = ['Chatrapati Sambhajinagar','Pune','Nagpur','Nashik','Jalna','Beed','Solapur','Kolhapur'];
+
+  String ownerToken = "";
+  _getToken() {
+    firebaseMessaging.getToken().then((value) {
+      setState(() {
+        ownerToken = value.toString();
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getToken();
+
+  }
+
+  bool _saving = false;
+
+  List<String> cities = [
+    'Chatrapati Sambhajinagar',
+    'Pune',
+    'Nagpur',
+    'Nashik',
+    'Jalna',
+    'Beed',
+    'Solapur',
+    'Kolhapur'
+  ];
   List<String> selectedCity = [];
 
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
+
   // TextEditingController cityController = TextEditingController();
   TextEditingController stateController = TextEditingController();
   TextEditingController shopNameController = TextEditingController();
@@ -30,6 +61,10 @@ class _OwnerInformationPageState extends State<OwnerInformationPage> {
   File? shopImage;
 
   void saveNewOwner() async {
+    setState(() {
+      _saving = true;
+    });
+
     var newContactNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
     String name = nameController.text.toLowerCase().trim();
     int contactNumber = int.parse(newContactNumber.toString());
@@ -47,6 +82,7 @@ class _OwnerInformationPageState extends State<OwnerInformationPage> {
     String downloadUrl = await taskSnapshot.ref.getDownloadURL();
 
     Map<String, dynamic> newUser = {
+      "ownerToken":ownerToken,
       "name": name,
       "contactNumber": contactNumber,
       "shopCity": city,
@@ -68,12 +104,14 @@ class _OwnerInformationPageState extends State<OwnerInformationPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Welcome !")),
       );
-
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.message!)),
       );
     }
+    setState(() {
+      _saving = false;
+    });
   }
 
   final formKey = GlobalKey<FormState>();
@@ -92,7 +130,7 @@ class _OwnerInformationPageState extends State<OwnerInformationPage> {
               height: 100,
               child: Text(
                 'Tell Us About Yourself',
-                style: GoogleFonts.lato(
+                style: TextStyle(
                     fontSize: 28,
                     color: Colors.black,
                     fontWeight: FontWeight.bold),
@@ -117,8 +155,15 @@ class _OwnerInformationPageState extends State<OwnerInformationPage> {
                         controllerName: shopAddressController,
                       ),
                       Padding(
-                        padding: EdgeInsets.all(9),
+                        padding: const EdgeInsets.all(8.0),
                         child: DropDownMultiSelect(
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.grey, width: 2),
+                            ),
+                          ),
+                          hint: Text('Shop City'),
                           options: cities,
                           selectedValues: selectedCity,
                           onChanged: (value) {
@@ -134,10 +179,10 @@ class _OwnerInformationPageState extends State<OwnerInformationPage> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          XFile? selectedImage = await ImagePicker()
-                              .pickImage(
-                                  imageQuality: 25,
-                                  source: ImageSource.camera);
+                          XFile? selectedImage = await ImagePicker().pickImage(
+                            imageQuality: 25,
+                            source: ImageSource.camera,
+                          );
                           if (selectedImage != null) {
                             File convertedFile = File(selectedImage.path);
                             setState(() {
@@ -145,14 +190,22 @@ class _OwnerInformationPageState extends State<OwnerInformationPage> {
                             });
                           }
                         },
-                        child: CircleAvatar(
-                          radius: 60,
-                          child: const Icon(Icons.upload),
-                          backgroundImage: (shopImage != null)
-                              ? FileImage(shopImage!)
-                              : null,
+                        child: Container(
+                          height: 100,
+                          width: 300,
+                          decoration: BoxDecoration(
+                            // borderRadius: BorderRadius.circular(60),
+                            image: (shopImage != null)
+                                ? DecorationImage(
+                                    image: FileImage(shopImage!),
+                                    fit: BoxFit.cover,
+                                  )
+                                : null,
+                          ),
+                          child:
+                              (shopImage == null) ? Icon(Icons.upload) : null,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -168,16 +221,17 @@ class _OwnerInformationPageState extends State<OwnerInformationPage> {
                 color: Colors.black,
               ),
               child: TextButton(
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    saveNewOwner();
-                  }
-                },
-                child: const Text(
-                  "Save",
-                  style: TextStyle(color: Colors.white, fontSize: 22),
-                ),
-              ),
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      saveNewOwner();
+                    }
+                  },
+                  child: _saving == false
+                      ? const Text(
+                          "Save",
+                          style: TextStyle(color: Colors.white, fontSize: 22),
+                        )
+                      : LinearProgressIndicator()),
             )
           ],
         ),

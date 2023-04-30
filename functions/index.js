@@ -1,27 +1,44 @@
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
 
+// Initialize the Firebase admin SDK
 admin.initializeApp();
 
-exports.sendBookingNotification = functions.database.ref('/bookings/{bookingId}').onWrite(async (change, context) => {
-  // Get the user ID from the booking data
+// Define the Cloud Function that sends the push notification
+exports.sendNotification = functions.firestore
+  .document("bookings/{bookingId}")
+  .onUpdate((change, context) => {
+  const bookingData = change.after.data();
   const bookingId = context.params.bookingId;
-  const bookingData = change.after.val();
-  const userId = bookingData.userId;
+  const customerToken = bookingData.customerToken;
+  const bookingUpdated = bookingData.bookingUpdated;
 
-  // Get the user's FCM token
-  const userSnapshot = await admin.database().ref(`/users/${userId}`).once('value');
-  const user = userSnapshot.val();
-  const fcmToken = user.fcmToken;
+    // Check if the bookingUpdated value has been set to true
+if (bookingUpdated) {
+      // Construct the notification payload
+    const payload = {
+        notification: {
+          title: "Booking Update",
+          body: "Your booking has been updated!",
+        },
+        data: {
+          bookingId: bookingId,
+        },
+      };
 
-  // Set the message payload
-  const payload = {
-    notification: {
-      title: 'Booking Updated',
-      body: 'Your booking has been updated'
+      // Send the notification to the customer's device
+      return admin
+        .messaging()
+        .send(customerToken, payload)
+        .then((response) => {
+          console.log("Notification sent successfully:", response);
+          return null;
+        })
+        .catch((error) => {
+          console.error("Error sending notification:", error);
+          return null;
+        });
     }
-  };
 
-  // Send the FCM notification
-  return admin.messaging().sendToDevice(fcmToken, payload);
-});
+    return null;
+  });

@@ -2,7 +2,7 @@ import 'package:bookkarooowner/screens/sendOtpPage.dart';
 import 'package:bookkarooowner/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class GettingStarted extends StatefulWidget {
   const GettingStarted({Key? key}) : super(key: key);
@@ -80,14 +80,14 @@ class _GettingStartedState extends State<GettingStarted> {
                   children: [
                     Text(
                       'Book Karoo',
-                      style: GoogleFonts.lato(
+                      style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 42),
                     ),
                     Text(
                       "Owner's",
-                      style: GoogleFonts.lato(
+                      style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 42),
@@ -106,7 +106,7 @@ class _GettingStartedState extends State<GettingStarted> {
                       padding: const EdgeInsets.all(12.0),
                       child: Text(
                         "Let's get started",
-                        style: GoogleFonts.lato(fontSize: 22),
+                        style: TextStyle(fontSize: 22),
                       ),
                     ),
                   ),
