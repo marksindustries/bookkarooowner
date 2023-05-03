@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>208883840983-97dvqm6hohk5lvtsaoobeh0v6afse6gd.apps.googleusercontent.com</string>
+	<string>443920479401-rgghoac269bujj3l2o3unpe99aq6ch9t.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.208883840983-97dvqm6hohk5lvtsaoobeh0v6afse6gd</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>208883840983-kbpdom9pbvkr1fd7eg89ere1opf1r57r.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.443920479401-rgghoac269bujj3l2o3unpe99aq6ch9t</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAuziN5C-pkbfITcAtrkmgCSEz7xqqNt5s</string>
+	<string>AIzaSyCthSfXmOvttaBUd3tfpQpjTSdPRB19ras</string>
 	<key>GCM_SENDER_ID</key>
-	<string>208883840983</string>
+	<string>443920479401</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.bookkarooowner</string>
+	<string>com.bookkaroo.bkowners</string>
 	<key>PROJECT_ID</key>
-	<string>bookkaroo-747a6</string>
+	<string>book-karoo-2</string>
 	<key>STORAGE_BUCKET</key>
-	<string>bookkaroo-747a6.appspot.com</string>
+	<string>book-karoo-2.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:208883840983:ios:683258c6b0ad8bdc273d92</string>
+	<string>1:443920479401:ios:e685657de93b2595fb65b8</string>
 </dict>
 </plist>

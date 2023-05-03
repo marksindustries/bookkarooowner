@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,43 +49,21 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDfjcL_3_0867TEMn6KIAJblGEeItQIEQE',
-    appId: '1:208883840983:web:710c6dc2736f9773273d92',
-    messagingSenderId: '208883840983',
-    projectId: 'bookkaroo-747a6',
-    authDomain: 'bookkaroo-747a6.firebaseapp.com',
-    storageBucket: 'bookkaroo-747a6.appspot.com',
-    measurementId: 'G-EH7TKRNCBV',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAtOxi9puYntUTRen1Zf4TR9sl8OzjmGlM',
-    appId: '1:208883840983:android:99fcd00933a70459273d92',
-    messagingSenderId: '208883840983',
-    projectId: 'bookkaroo-747a6',
-    storageBucket: 'bookkaroo-747a6.appspot.com',
+    apiKey: 'AIzaSyAB-LO1hVTQ_y5JncPcYul4o2Lt0aqOwyU',
+    appId: '1:443920479401:android:c80b933214b36261fb65b8',
+    messagingSenderId: '443920479401',
+    projectId: 'book-karoo-2',
+    storageBucket: 'book-karoo-2.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAuziN5C-pkbfITcAtrkmgCSEz7xqqNt5s',
-    appId: '1:208883840983:ios:683258c6b0ad8bdc273d92',
-    messagingSenderId: '208883840983',
-    projectId: 'bookkaroo-747a6',
-    storageBucket: 'bookkaroo-747a6.appspot.com',
-    androidClientId: '208883840983-kbpdom9pbvkr1fd7eg89ere1opf1r57r.apps.googleusercontent.com',
-    iosClientId: '208883840983-97dvqm6hohk5lvtsaoobeh0v6afse6gd.apps.googleusercontent.com',
-    iosBundleId: 'com.example.bookkarooowner',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAuziN5C-pkbfITcAtrkmgCSEz7xqqNt5s',
-    appId: '1:208883840983:ios:683258c6b0ad8bdc273d92',
-    messagingSenderId: '208883840983',
-    projectId: 'bookkaroo-747a6',
-    storageBucket: 'bookkaroo-747a6.appspot.com',
-    androidClientId: '208883840983-kbpdom9pbvkr1fd7eg89ere1opf1r57r.apps.googleusercontent.com',
-    iosClientId: '208883840983-97dvqm6hohk5lvtsaoobeh0v6afse6gd.apps.googleusercontent.com',
-    iosBundleId: 'com.example.bookkarooowner',
+    apiKey: 'AIzaSyCthSfXmOvttaBUd3tfpQpjTSdPRB19ras',
+    appId: '1:443920479401:ios:e685657de93b2595fb65b8',
+    messagingSenderId: '443920479401',
+    projectId: 'book-karoo-2',
+    storageBucket: 'book-karoo-2.appspot.com',
+    iosClientId: '443920479401-rgghoac269bujj3l2o3unpe99aq6ch9t.apps.googleusercontent.com',
+    iosBundleId: 'com.bookkaroo.bkowners',
   );
 }

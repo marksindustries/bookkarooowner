@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -17,35 +16,27 @@ class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin<HomePage> {
   @override
   bool get wantKeepAlive => true;
-
   var contactNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
 
   void confirmBooking(
       bool confirmation, int index, QuerySnapshot snapshot) async {
-    // Get a reference to the "booking" collection in Firestore
     CollectionReference bookingCollection =
         FirebaseFirestore.instance.collection('bookings');
-
-    // Get the document ID of the booking at the given index
     String documentID = snapshot.docs[index].id;
-
-    // Update the "status" field of the booking with the given document ID
     await bookingCollection.doc(documentID).update({'isConfirm': confirmation});
     await bookingCollection.doc(documentID).update({'bookingUpdated': true});
   }
-
-  FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        centerTitle: false,
         flexibleSpace: ClipRect(
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10,sigmaY: 50),
-            child: Container(color:Colors.transparent),
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 50),
+            child: Container(color: Colors.transparent),
           ),
         ),
         automaticallyImplyLeading: false,
@@ -89,7 +80,6 @@ class _HomePageState extends State<HomePage>
                         ),
                       ),
                       onDismissed: (direction) {
-                        // Delete the document from Firestore when swiped left
                         snapShot.data!.docs[index].reference.delete();
                       },
                       child: Card(
@@ -176,7 +166,7 @@ class _HomePageState extends State<HomePage>
                                           "Booking Declined",
                                           style: TextStyle(
                                               color: Colors.red, fontSize: 22),
-                                        )
+                                        ),
                             ],
                           ),
                         ),

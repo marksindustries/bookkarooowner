@@ -1,48 +1,40 @@
 {
   "project_info": {
-    "project_number": "208883840983",
-    "project_id": "bookkaroo-747a6",
-    "storage_bucket": "bookkaroo-747a6.appspot.com"
+    "project_number": "443920479401",
+    "project_id": "book-karoo-2",
+    "storage_bucket": "book-karoo-2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:208883840983:android:cc4796ad01dad92b273d92",
+        "mobilesdk_app_id": "1:443920479401:android:c80b933214b36261fb65b8",
         "android_client_info": {
-          "package_name": "com.bookkaroo.in.bookkaroo"
+          "package_name": "com.bookkaroo.bkowners"
         }
       },
       "oauth_client": [
         {
-          "client_id": "208883840983-qhnubm21jlff5fhopdtk06o825t326t1.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.bookkaroo.in.bookkaroo",
-            "certificate_hash": "665ae9604dd0660d2a684e5cb53bb5f00be59310"
-          }
-        },
-        {
-          "client_id": "208883840983-uacsr4ou49kl4ve12tu3m2v92ijr3bpt.apps.googleusercontent.com",
+          "client_id": "443920479401-r6qrfqe0a3kue4jcn0ue9avoj7sa4j1p.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAtOxi9puYntUTRen1Zf4TR9sl8OzjmGlM"
+          "current_key": "AIzaSyAB-LO1hVTQ_y5JncPcYul4o2Lt0aqOwyU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "208883840983-uacsr4ou49kl4ve12tu3m2v92ijr3bpt.apps.googleusercontent.com",
+              "client_id": "443920479401-r6qrfqe0a3kue4jcn0ue9avoj7sa4j1p.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "208883840983-60ujq7411seri7mgvop91thcrue4e0mh.apps.googleusercontent.com",
+              "client_id": "443920479401-okqm4g952c5kg0r1h4dlu9kvda5ut9lt.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.bookkaroowner"
+                "bundle_id": "com.bookkaroo.bookkaroo"
               }
             }
           ]
@@ -51,34 +43,34 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:208883840983:android:99fcd00933a70459273d92",
+        "mobilesdk_app_id": "1:443920479401:android:aa1c8f09ec00e658fb65b8",
         "android_client_info": {
-          "package_name": "com.example.bookkarooowner"
+          "package_name": "com.bookkaroo.bookkaroo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "208883840983-uacsr4ou49kl4ve12tu3m2v92ijr3bpt.apps.googleusercontent.com",
+          "client_id": "443920479401-r6qrfqe0a3kue4jcn0ue9avoj7sa4j1p.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAtOxi9puYntUTRen1Zf4TR9sl8OzjmGlM"
+          "current_key": "AIzaSyAB-LO1hVTQ_y5JncPcYul4o2Lt0aqOwyU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "208883840983-uacsr4ou49kl4ve12tu3m2v92ijr3bpt.apps.googleusercontent.com",
+              "client_id": "443920479401-r6qrfqe0a3kue4jcn0ue9avoj7sa4j1p.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "208883840983-60ujq7411seri7mgvop91thcrue4e0mh.apps.googleusercontent.com",
+              "client_id": "443920479401-okqm4g952c5kg0r1h4dlu9kvda5ut9lt.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.bookkaroowner"
+                "bundle_id": "com.bookkaroo.bookkaroo"
               }
             }
           ]
